@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/orderPlay" android:title="顺序播放"></item>
+
+    <item android:id="@+id/randPlay" android:title="随机播放"></item>
+
+    <item android:id="@+id/onlyPlay" android:title="单曲播放"></item>
+
+    <item android:id="@+id/scanner" android:title="扫描"></item>
+</menu>

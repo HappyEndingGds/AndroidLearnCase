@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/list_item">
+
+    <TextView
+        android:padding="6dp"
+        android:id="@+id/tvt_title"
+        android:text="歌曲:"
+        android:textSize="20dp"
+        android:lineSpacingExtra="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:singleLine="true"
+
+        android:ellipsize="end"/>
+
+</LinearLayout>
