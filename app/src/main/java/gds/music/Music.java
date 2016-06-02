@@ -86,13 +86,35 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
         btnPlay = (Button) findViewById(R.id.btn_play);
         btnBefore = (Button) findViewById(R.id.btn_befor);
         btnNext = (Button) findViewById(R.id.btn_next);
+        tvtDuration = (TextView) findViewById(R.id.tvt_duration);
         proBar = (SeekBar) findViewById(R.id.pro);
         proBar.setProgress(0);
         btnPlay.setEnabled(false);
         btnNext.setEnabled(false);
         btnBefore.setEnabled(false);
         proBar.setEnabled(false);
-        tvtDuration = (TextView) findViewById(R.id.tvt_duration);
+        tvtDuration.setEnabled(false);
+
+
+        th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isThread){
+                    if(music.isPlaying()){
+                        proBar.setProgress(music.getCurrentPosition());
+                        Message msg =new Message();
+                        msg.what = ROLL;
+                        handler.sendMessage(msg);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        th.start();
 
 
         btnPlay.setOnClickListener(this);
@@ -140,10 +162,7 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
               try {
                   myDebug("onItemClick...");
                   currentPlayingIndex = position;
-
                   playMusic(list.get(position).getAbsPath());
-
-
               } catch (IOException e) {
                   e.printStackTrace();
               }
@@ -282,12 +301,6 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //Toast.makeText(Music.this,data.getData().toString(),Toast.LENGTH_LONG).show();
-
-    }
-
     private int createCurrentPlayingIndexByMode(){
         //如果是单曲循环模式，返回的仍然是当前索引
         if(isOnlyPlay){
@@ -319,14 +332,14 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
         tvtDuration.setText("00:00");
         proBar.setProgress(0);
         proBar.setMax(music.getDuration());
-        updateProgress();
+        //updateProgress();
         isFirstPlay = false;
         strRollWord = getRollWord();
         strN = strRollWord.length();
     }
 
     private void updateProgress(){
-       th =  new Thread(new Runnable() {
+       /*th =  new Thread(new Runnable() {
             @Override
             public void run() {
                 while (isThread){
@@ -344,7 +357,7 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
                 }
             }
         });
-        th.start();
+        th.start();*/
     }
 
     private ArrayList<String> getMusicNameList(String gmnlDirPath){
@@ -393,6 +406,7 @@ public class Music extends AppCompatActivity implements View.OnClickListener  {
             btnNext.setEnabled(true);
             btnBefore.setEnabled(true);
             proBar.setEnabled(true);
+            tvtDuration.setEnabled(true);
         }
     }
 
